@@ -1,0 +1,72 @@
+SPI example for MSP430 using mps430-gcc on Linux  
+sw@kaltpost.de
+http://gpio.kaltpost.de/
+
+Introduction
+------------
+
+This example shows how to use SPI on USCI_B of the MSP430g2553 to communicate to a Nordic NRF24l01+ module. It simply reads out the configuration register of the NRF and prints out the result in binary on the UART at USCI_A at 9600 bauds. 
+
+Hardware Setup
+--------------
+
+The wiring for this example is as follows:
+
+MSP430					To
+----------------------------------------
+RXD  P1.1				TXD serial line
+TXD	P1.2				RXD serial line
+SCLK P1.5				NRF SCK	
+SOMI P1.6				NRF MO
+SIMO P1.7				NRF MI
+CS   P1.3				NRF CS
+
+For the NRF also connect the following:
+
+NRF						To
+----------------------------------------
+VCC						3.3v
+CE						3.3v
+GND						GND
+ 
+NOTE: When using the TI Launchpad, "/dev/ttyACM0" could be used as serial port at 9600 Bauds, but RX/TX must be crossed on the jumper bridge of the Launchpad.
+
+
+Compilation
+------------
+
+This project is written for msp430-gcc on Linux (I used v4.5.3 which is available as package on Ubuntu). For flashing the "mspdebug" tool was used (also from the Ubuntu package).
+
+To compile the source just issue a:
+
+make
+
+This builds the firmware in the "bin" subdirectory in various formats.
+
+
+Flashing
+------------
+
+To flash the firmware to your Launchpad through "mspdebug", you could use the "flash-target" make target:
+
+make flash-target
+
+
+Doxygen Docs
+------------
+
+If you installed doxygen on your system, you could generate the HTML-based documentation by calling:
+
+make gen-docs
+
+This will create the documentation under "doc/gen/html".
+
+
+Usage
+------------
+
+Connecting your Launchpad should give you a new serial device "/dev/ttyACM0". Connect to this port at 9600 bauds - e.g. by using screen:
+
+screen /dev/ttyACM0 9600
+
+After resetting the Launchpad, the configuration register of the NRF should be printed out on the serial line. 
