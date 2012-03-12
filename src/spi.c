@@ -79,6 +79,8 @@ void spi_init(void)
 
 	// (4)	
 	UCB0CTL1 &= ~UCSWRST; 
+
+	spi_csh();
 }
 
 void spi_csh(void)
